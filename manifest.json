@@ -1,0 +1,32 @@
+{
+    "short_name": "indeXP",
+    "name": "Index Printers",
+    "description": "Index de las impresoras",
+    "icons": [
+      {
+        "src": "assets/img/grupoLagar.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "assets/img/grupoLagar.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/?source=pwa",
+    "background_color": "#3367D6",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#3367D6",
+    "shortcuts": [
+      {
+        "name": "indeXP",
+        "short_name": "indeXP",
+        "description": "indeXP",
+        "url": "/indeXP?source=pwa",
+        "icons": [{ "src": "assets/img/grupoLagar.png", "sizes": "192x192" }]
+      }
+      
+    ]
+  }
