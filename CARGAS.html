@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora de Discos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!-- SweetAlert library -->
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            padding-top: 20px;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .resultado-icon img {
+            width: 20px;
+            vertical-align: middle;
+            position: relative;
+            margin-left: -10px;
+        }
+    </style>
+    <script>
+        function calcularDiscos() {
+            var monto = parseFloat(document.getElementById("monto").value);
+            var barra = document.querySelector('input[name="barra"]:checked').value === "hombre" ? 45 : 35;
+            var discosDisponibles = {
+                35: 4,
+                15: 6,
+                10: 8,
+                5: 4,
+                2.5: 2
+            };
+            var discos = [35, 15, 10, 5, 2.5];
+            var cantidadDiscos = [0, 0, 0, 0, 0];
+
+            monto -= barra;
+
+            for (var i = 0; i < discos.length; i++) {
+                while (monto >= discos[i] * 2 && cantidadDiscos[i] < discosDisponibles[discos[i]]) {
+                    monto -= discos[i] * 2;
+                    cantidadDiscos[i] += 2;
+                }
+            }
+
+            var resultado = "";
+            var totalPorTipo = 0;
+            for (var i = 0; i < discos.length; i++) {
+                if (cantidadDiscos[i] > 0) {
+                    resultado += "<div class='discos-icon'>";
+                    for (var j = 0; j < cantidadDiscos[i]; j++) {
+                        resultado += "<img src='wp.png' alt='' class='img-fluid'>";
+                    }
+                    resultado += "</div>";
+                    resultado += cantidadDiscos[i] + " discos de " + discos[i] + " lbs<br>";
+
+                    totalPorTipo += cantidadDiscos[i] * discos[i];
+                }
+            }
+
+            var pesoTotal = totalPorTipo + barra;
+
+            resultado += "<br>Total por tipo de disco:";
+            for (var i = 0; i < discos.length; i++) {
+                if (cantidadDiscos[i] > 0) {
+                    resultado += "<br>" + cantidadDiscos[i] + " discos de " + discos[i] + " lbs: " + (cantidadDiscos[i] * discos[i]) + " lbs";
+                }
+            }
+
+            resultado += "<br>Peso de la barra: " + barra + " lbs";
+            resultado += "<br>Peso total: " + pesoTotal + " lbs";
+
+            // Mostrar SweetAlert con el resultado
+            Swal.fire({
+                title: 'Resultado',
+                html: resultado,
+                icon: 'info',
+                confirmButtonText: 'Cerrar'
+            });
+
+            // Mostrar el resultado en la página
+            document.getElementById("resultado").innerHTML = resultado;
+        }
+
+        document.getElementById("monto").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                calcularDiscos();
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Calculadora de Discos</h1>
+        <div class="form-group">
+            <label for="monto">Cuanto Peso vas a Cargar?: (contando el peso de la barra):</label>
+            <input type="number" id="monto" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Selecciona el tipo de barra:</label><br>
+            <input type="radio" name="barra" value="hombre" checked> Barra de Hombre (45 lbs)<br>
+            <input type="radio" name="barra" value="mujer"> Barra de Mujer (35 lbs)
+        </div>
+        <button class="btn btn-primary btn-block" onclick="calcularDiscos()">Calcular</button>
+        <div class="mt-3 resultado-icon">
+            <h2>Resultado:</h2>
+            <div id="resultado"></div>
+        </div>
+    </div>
+</body>
+</html>
