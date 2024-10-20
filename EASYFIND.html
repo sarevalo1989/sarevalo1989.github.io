@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +19,7 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label for="codigoInput" class="form-label">Ingresa el código:</label>
-                            <input type="number" id="codigoInput" class="form-control" placeholder="Ej. 7915702">
+                            <input type="text" id="codigoInput" class="form-control" placeholder="Ej. 7915702">
                         </div>
                         <button id="buscarBtn" class="btn btn-primary w-100">Buscar</button>
                     </div>
@@ -28,7 +31,7 @@
     <script>
         // Tabla de datos
         const data = {
-           7915702: '-**1**-7915702 - PANEL LED NOM 2X4 60W 6500K P23829-36 SYL',
+7915702: '-**1**-7915702 - PANEL LED NOM 2X4 60W 6500K P23829-36 SYL',
 7870790: '-**2**-7870790 - LAMPARA LED 2x2 40W 120-240V-LI-8822-ECO-6K',
 7871565: '-**3**-7871565 - LAMPARA LED 1*4 40W 3600LM 120-240V LI-8814-ECO-6K',
 7915701: '-**4**-7915701 - PANEL LED 2X2 40W 6K 6500K NOM P27158/ P23784-36 SYLVANIA',
@@ -351,7 +354,6 @@
 7873109: '-**517**-7873109 - FAROL PARED NEGRO NARDO BK 1*E27 IP55',
 7094289: '-**518**-7094289 - FAROL JARDIN #FA601-BK NEGRO  (A-D) I-56 U',
 7094849: '-**519**-7094849 - FAROL JARDIN #FA601-DG (A-D) I-56 U',
-7872500: '-**520**-7872500 - LAMPARA PIE NEGRA CON VIDRIO AMBAR 1.70CM LP-1905A',
 7872484: '-**1**-7872484 - FAROL COLGANTE 7515 ORB ETL IP44 FA7515H-ORB',
 7872486: '-**2**-7872486 - FAROL COLGANTE 7516 ORB ETL IP44 FA7516H-ORB',
 7872494: '-**3**-7872494 - FAROL COLGANTE 7525 ORB E27 IP44 FA7525H-ORB',
@@ -408,7 +410,6 @@
 7872263: '-**115**-7872263 - LAMPARA DE TECHO 1841 BRONCE E27 UL #LA-1841 S',
 7870686: '-**116**-7870686 - LAMPARA DE TECHO VIDRIO LA8614-3D',
 7519205: '-**118**-7519205 - LI-49350 GD LAMP DE TECHO LED 3W 3K 180 LM',
-7519212: '-**119**-7519212 - LI-17344-8C LAMPARA DE TECHO LED 38W 3000K',
 7872271: '-**123**-7872271 - LAMPARA DE TECHO 1851 AMBAR E27 UL #LA-1851 A',
 7872272: '-**124**-7872272 - LAMPARA DE TECHO 1852 SM GREY E27 UL #LA-1852 SG',
 7870640: '-**150**-7870640 - LAMP. TECHO LA7002C VERDE CL 1*E27',
@@ -442,7 +443,6 @@
 7519215: '-**180**-7519215 - LI-80513 BKG-3CCT LAMP LED LINEAL 8051 30W 3CCT',
 7873069: '-**181**-7873069 - LAMPARA TECHO LED LA- 1885WH 24W 4K 1440L DIM',
 7519753: '-**183**-7519753 - LAMPARA DE TECHO LED 1908-3AB BRONCE',
-7519210: '-**184**-7519210 - LI-77276AB LAMP TECHO 7727-6 28W BRONCE',
 7871098: '-**1**-7871098 - VENTILADOR TORRE 40"  110 V  3 VELOCIDADES TF 40',
 7872692: '-**2**-7872692 - ABANICO TORRE 40" 1.8 X 17 C/CONTROL DAEWOO DE-40TF1207',
 7872691: '-**3**-7872691 - ABANICO TORRE 31" 81.5 X 15.5 C/CONTROL DAEWOO DE-31TF1204',
@@ -512,7 +512,6 @@
 7870952: '-**219**-7870952 - ABANICO 5 ASPAS 42" C/VIDRIO MADERA 19381',
 7080226: '-**220**-7080226 - ABANICO 5 ASPAS 52" C/CONTROL ARGOS LED SN 16W',
 7019628: '-**221**-7019628 - ABANICO 5 ASPAS 52" DECORATIVO PALAU NICKEL',
-7019627: '-**222**-7019627 - ABANICO 5 ASPAS 52" DECORATIVO PALAU IRON',
 7871911: '-**223**-7871911 - ABANICO 3 ASPAS 66” C/VIDRIO LED INT/ UL #19390 JAVA',
 7872365: '-**224**-7872365 - ABANICO 3 ASPAS 56¨ WINDY WH BLANCO SIN LUZ INT UL',
 3290572: '-**512**-3290572 - LLAVE LAVATORIO MONOCONTROL MEDIA MODERNA 19.01896.002',
@@ -683,50 +682,29 @@
 3109054: '-**3**-3109054 - CACHERA PARA LAVATORIO PFISTER CLASIC #040-CSCPC 1M/CRUZ',
 7005319: '-**2**-7005319 - CACHERA PARA LAVATORIO PFISTER CLASIC #040-CSVPC 1M/COPA',
 3109055: '-**1**-3109055 - CACHERA PARA LAVATORIO PFISTER CLASIC #040-CSLPC 1M/PAL'
+
+
+
         };
 
-        function resetForm() {
-            document.getElementById('codigoInput').value = ''; // Limpia el campo de texto
-            document.getElementById('codigoInput').focus();    // Enfoca el campo de texto
-        }
-
-        function buscarCodigo() {
+        document.getElementById('buscarBtn').addEventListener('click', function () {
             const codigo = document.getElementById('codigoInput').value;
 
             if (codigo in data) {
                 Swal.fire({
-                    title: `${codigo}`,
+                    title: 'Resultado',
                     text: `El valor de Easy Find para el código ${codigo} es: ${data[codigo]}`,
-                    icon: 'success',
-                    timer: 25000,  // SweetAlert se cierra después de 25 segundos
-                    timerProgressBar: true,
-                    didClose: () => {
-                        resetForm(); // Después de que se cierra el SweetAlert, limpia y enfoca el campo
-                    }
+                    icon: 'success'
                 });
             } else {
                 Swal.fire({
                     title: 'Error',
                     text: 'Código no encontrado',
-                    icon: 'error',
-                    timer: 25000,  // SweetAlert se cierra después de 25 segundos
-                    timerProgressBar: true,
-                    didClose: () => {
-                        resetForm(); // Después de que se cierra el SweetAlert, limpia y enfoca el campo
-                    }
+                    icon: 'error'
                 });
-            }
-        }
-
-        // Detectar cuando se presiona el botón "Buscar"
-        document.getElementById('buscarBtn').addEventListener('click', buscarCodigo);
-
-        // Detectar cuando se presiona "Enter" en el campo de texto
-        document.getElementById('codigoInput').addEventListener('keydown', function (event) {
-            if (event.key === 'Enter') {
-                event.preventDefault(); // Prevenir el comportamiento predeterminado del formulario
-                buscarCodigo(); // Ejecutar la función buscarCodigo() al presionar Enter
             }
         });
     </script>
 </body>
+
+</html>

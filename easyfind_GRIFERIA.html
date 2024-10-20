@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Easyfind y Descripción</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, button {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Buscar Código</h1>
+    <p>Ingresa el código:</p>
+    <input type="text" id="codigo" placeholder="Ingresa el código">
+    <button onclick="buscarCodigo()">Buscar</button>
+
+    <h2>Resultados:</h2>
+    <p id="resultado"></p>
+
+    <script>
+        // Base de datos de códigos
+        const datos = [
+            { codigo: '3109055', easyfind: 1, descripcion: '3109055 - CACHERA PARA LAVATORIO PFISTER CLASIC #040-CSLPC 1M/PAL' },
+			{ codigo: '3109055', easyfind: 1, descripcion: '3109055 - CACHERA PARA LAVATORIO PFISTER CLASIC #040-CSLPC 1M/PAL'}
+            { codigo: '7005319', easyfind: 2, descripcion: '7005319 - CACHERA PARA LAVATORIO PFISTER CLASIC #040-CSVPC 1M/COPA' },
+            { codigo: '7005319', easyfind:2, descripcion: '7005319 - CACHERA PARA LAVATORIO PFISTER CLASIC #040-CSVPC 1M/COPA'},
+			{ codigo: '3109054', easyfind: 3, descripcion: '3109054 - CACHERA PARA LAVATORIO PFISTER CLASIC #040-CSCPC 1M/CRUZ' },
+			
+            { codigo: '3006927', easyfind: 5, descripcion: '3006927 - CACHERA PARA LAVATORIO PFISTER CLASIC #1435000 2M/COPA' },
+            { codigo: '3000778', easyfind: 6, descripcion: '3000778 - CACHERA PARA LAVATORIO PFISTER CLASIC #048-CSCPC 2M/CRUZ' },
+            { codigo: '3000779', easyfind: 7, descripcion: '3000779 - CACHERA PARA LAVATORIO PFISTER CLASIC #048-CSLPC 2M/PAL' },
+            { codigo: '3291372', easyfind: 8, descripcion: '3291372 - CACHERA LAV PUSH 1H 042PF0C PFIRST PFISTER' },
+            { codigo: '3291397', easyfind: 9, descripcion: '3291397 - CACHERA P.P LAV. MAIA 2 MANIJAS 048PFLC CROMO' },
+			{ codigo: '3129821', easyfind: 126, descripcion: '3129821 - CACHERA BAÑO NEGRO MATE SIN CUERPO PTT188792-BL DELTA P'}
+			
+			
+			
+        ];
+
+        // Función para buscar el código ingresado
+        function buscarCodigo() {
+            const codigoIngresado = document.getElementById('codigo').value;
+            const resultado = document.getElementById('resultado');
+            
+            // Buscar en la base de datos
+            const encontrado = datos.find(item => item.codigo === codigoIngresado);
+
+            // Mostrar el resultado
+            if (encontrado) {
+                resultado.innerHTML = `Easyfind: ${encontrado.easyfind} <br> Descripción: ${encontrado.descripcion}`;
+            } else {
+                resultado.innerHTML = 'Código no encontrado.';
+            }
+        }
+    </script>
+</body>
+</html>

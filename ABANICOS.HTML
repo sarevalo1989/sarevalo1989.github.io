@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtrar Abanicos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="mb-4">Filtrar Abanicos</h1>
+        
+        <form id="filterForm" class="row g-3">
+            <div class="col-md-4">
+                <label for="tamanio" class="form-label">Tamaño</label>
+                <select id="tamanio" class="form-select">
+                    <option value="">Seleccionar</option>
+                    <option value="42">42"</option>
+                    <option value="44">44"</option>
+                    <option value="52">52"</option>
+                    <option value="56">56"</option>
+                    <option value="60">60"</option>
+                    <option value="66">66"</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="aspas" class="form-label">Número de Aspas</label>
+                <select id="aspas" class="form-select">
+                    <option value="">Seleccionar</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="luz" class="form-label">Con Luz</label>
+                <select id="luz" class="form-select">
+                    <option value="">Seleccionar</option>
+                    <option value="SI">Sí</option>
+                    <option value="NO">No</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="color" class="form-label">Color</label>
+                <select id="color" class="form-select">
+                    <option value="">Seleccionar</option>
+                    <option value="BLANCO">Blanco</option>
+                    <option value="BRONCE">Bronce</option>
+                    <option value="NIQUEL">Níquel</option>
+                    <option value="MADERA">Madera</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="materialAspa" class="form-label">Material de Aspa</label>
+                <select id="materialAspa" class="form-select">
+                    <option value="">Seleccionar</option>
+                    <option value="METAL">Metal</option>
+                    <option value="ACRILICO">Acrílico</option>
+                    <option value="PLASTICO">Plástico</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="interiorExterior" class="form-label">Ubicación</label>
+                <select id="interiorExterior" class="form-select">
+                    <option value="">Seleccionar</option>
+                    <option value="INTERIORES">Interiores</option>
+                    <option value="EXTERIORES">Exteriores</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <button type="button" class="btn btn-primary" onclick="filtrarAbanicos()">Filtrar</button>
+            </div>
+        </form>
+
+        <div id="resultados" class="mt-5"></div>
+    </div>
+
+    <script>
+        const abanicos = [
+            {
+                codigo: "7799974",
+                descripcion: "ABANICO IND 3 ASPAS 56¨BCO",
+                tamanio: "56",
+                aspas: "3",
+                color: "BLANCO",
+                materialAspa: "METAL",
+                flujo: "NO",
+                bobina: "COBRE",
+                ubicacion: "INTERIORES",
+                velocidades: "5",
+                control: "PARED",
+                conLuz: "NO",
+                dimmer: "NO",
+                certificacion: "NO",
+                garantia: "6 MESES",
+                incluye: "CONTROL PARED",
+                potencia1: "CP12",
+                cfm1: "7441118406378",
+                largo: "64 cm",
+                ancho: "30 cm",
+                alto: "20 cm"
+            },
+            {
+                codigo: "7080226",
+                descripcion: "ABANICO 5ASPAS 52 C/CONTROL",
+                tamanio: "52",
+                aspas: "5",
+                color: "SATIN",
+                materialAspa: "ACRILICO",
+                flujo: "SI",
+                bobina: "COBRE",
+                ubicacion: "INTERIORES",
+                velocidades: "3",
+                control: "REMOTO",
+                conLuz: "SI",
+                dimmer: "UL",
+                certificacion: "DE POR VIDA LIMITADA",
+                garantia: "CONTRO-LUZ",
+                incluye: "NO",
+                potencia1: "CP9",
+                cfm1: "7441118421104",
+                largo: "64 cm",
+                ancho: "28 cm",
+                alto: "30 cm"
+            },
+            // ... Resto de los datos
+        ];
+
+        function filtrarAbanicos() {
+            const tamanio = document.getElementById("tamanio").value;
+            const aspas = document.getElementById("aspas").value;
+            const luz = document.getElementById("luz").value;
+            const color = document.getElementById("color").value;
+            const materialAspa = document.getElementById("materialAspa").value;
+            const interiorExterior = document.getElementById("interiorExterior").value;
+
+            const resultados = abanicos.filter(abanico => {
+                return (!tamanio || abanico.tamanio === tamanio) &&
+                       (!aspas || abanico.aspas === aspas) &&
+                       (!luz || abanico.conLuz === luz) &&
+                       (!color || abanico.color === color) &&
+                       (!materialAspa || abanico.materialAspa === materialAspa) &&
+                       (!interiorExterior || abanico.ubicacion === interiorExterior);
+            });
+
+            mostrarResultados(resultados);
+        }
+
+        function mostrarResultados(resultados) {
+            const contenedorResultados = document.getElementById("resultados");
+            contenedorResultados.innerHTML = "";
+
+            if (resultados.length === 0) {
+                contenedorResultados.innerHTML = "<p>No se encontraron abanicos con esos filtros.</p>";
+                return;
+            }
+
+            resultados.forEach(abanico => {
+                const abanicoCard = `
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">${abanico.descripcion}</h5>
+                            <p class="card-text">
+                                <strong>Código:</strong> ${abanico.codigo}<br>
+                                <strong>Tamaño:</strong> ${abanico.tamanio}<br>
+                                <strong>Aspas:</strong> ${abanico.aspas}<br>
+                                <strong>Color:</strong> ${abanico.color}<br>
+                                <strong>Material de Aspa:</strong> ${abanico.materialAspa}<br>
+                                <strong>Flujo:</strong> ${abanico.flujo}<br>
+                                <strong>Bobina:</strong> ${abanico.bobina}<br>
+                                <strong>Ubicación:</strong> ${abanico.ubicacion}<br>
+                                <strong>Velocidades:</strong> ${abanico.velocidades}<br>
+                                <strong>Control:</strong> ${abanico.control}<br>
+                                <strong>Con Luz:</strong> ${abanico.conLuz}<br>
+                                <strong>Certificación:</strong> ${abanico.certificacion}<br>
+                                <strong>Garantía:</strong> ${abanico.garantia}<br>
+                                <strong>Incluye:</strong> ${abanico.incluye}<br>
+                                <strong>Potencia:</strong> ${abanico.potencia1}<br>
+                                <strong>CFM:</strong> ${abanico.cfm1}<br>
+                                <strong>Dimensiones:</strong> Largo: ${abanico.largo}, Ancho: ${abanico.ancho}, Alto: ${abanico.alto}
+                            </p>
+                        </div>
+                    </div>
+                `;
+                contenedorResultados.innerHTML += abanicoCard;
+            });
+        }
+    </script>
+</body>
+</html>

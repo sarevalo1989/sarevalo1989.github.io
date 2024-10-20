@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Piso Cerámico</title>
+    
+    <!-- Incluir Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <!-- Incluir SweetAlert2 CSS y JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@9">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <!-- Estilos para el modo oscuro -->
+    <style>
+        body {
+            background-color: #121212;
+            color: #fff;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .form-group label {
+            color: #fff;
+        }
+
+        .btn-dark {
+            background-color: #343a40;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2 class="mb-4">Calculadora de Piso Cerámico</h2>
+
+        <form>
+            <div class="form-group">
+                <label for="ancho">Ancho de la Pieza (centímetros):</label>
+                <input type="number" class="form-control" id="ancho" placeholder="Ingrese el ancho">
+            </div>
+
+            <div class="form-group">
+                <label for="alto">Alto de la Pieza (centímetros):</label>
+                <input type="number" class="form-control" id="alto" placeholder="Ingrese el alto">
+            </div>
+
+            <div class="form-group">
+                <label for="metrosCaja">Metros Cuadrados por Caja:</label>
+                <input type="number" class="form-control" id="metrosCaja" placeholder="Ingrese metros cuadrados por caja">
+            </div>
+
+            <button type="button" class="btn btn-dark" onclick="calcularPiezas()">Calcular</button>
+        </form>
+
+        <div id="resultado" class="mt-4"></div>
+    </div>
+
+    <!-- Incluir Bootstrap JS y Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <script>
+        function calcularPiezas() {
+            // Obtener valores de ancho, alto y metros cuadrados por caja
+            var ancho = parseFloat(document.getElementById('ancho').value);
+            var alto = parseFloat(document.getElementById('alto').value);
+            var metrosCaja = parseFloat(document.getElementById('metrosCaja').value);
+
+            // Validar que se ingresaron valores válidos
+            if (isNaN(ancho) || isNaN(alto) || isNaN(metrosCaja) || ancho <= 0 || alto <= 0 || metrosCaja <= 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Por favor, ingrese valores válidos para el ancho, el alto y los metros cuadrados por caja.'
+                });
+                return;
+            }
+
+            // Calcular área de la pieza
+            var areaPieza = (ancho / 100) * (alto / 100); // Convertir de centímetros a metros
+
+            // Calcular cuántas piezas trae cada caja
+            var piezasPorCaja = metrosCaja / areaPieza;
+
+            // Mostrar resultado con SweetAlert
+            Swal.fire({
+                icon: 'success',
+                title: 'Resultado',
+                html: 'Cada caja trae aproximadamente ' + piezasPorCaja.toFixed(2) + ' piezas.<br><br>' +
+                      '<b>Proceso:</b><br>' +
+                      'Área de la pieza = Ancho x Alto<br>' +
+                      'Área en metros cuadrados = Área de la pieza (convertida a metros cuadrados)<br>' +
+                      'Piezas por caja = Metros cuadrados por caja / Área en metros cuadrados'
+            });
+        }
+    </script>
+
+</body>
+</html>
