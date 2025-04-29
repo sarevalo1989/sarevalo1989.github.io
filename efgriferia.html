@@ -29,7 +29,7 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label for="codigoInput" class="form-label">Ingresa el código:</label>
-                            <input type="number" id="codigoInput" class="form-control" value="3290649" placeholder="Ej. 7915702" required>
+                            <input type="number" id="codigoInput" class="form-control" value="" placeholder="Ej. 7915702" required>
                         </div>
                         <button type="submit" id="buscarBtn" class="btn btn-primary w-100">Buscar</button>
                     </div>
@@ -319,11 +319,12 @@
             3129699: '**EF:*605*** -3129699 - LLAVE LAVATORIO MONOCONTROL ALTA ZEN ROSE GOLD 799560001LL*****G26-F1',
             3129701: '**EF:*606*** -3129701 - LLAVE LAVATORIO MONOCONTROL ALTA ZEN CROMADA 19.01901.002*****G26-F1',
             3129697: '**EF:*607*** -3129697 - LLAVE LAVATORIO MONOCONTROL ALTA ZEN NEGRA 799570001LL*****G26-F1',
+			3130706: '**EF:*278*** -3130706 - TOSCANA LLAVE MEXCLA LAVAMANOS BOWL MB978 NEGRA*****G13-F3',
             3290572: '**EF:*608*** -3290572 - LLAVE LAVATORIO MONOCONTROL MEDIA MODERNA 19.01896.002*****G26-F1'
         };
 
         function resetForm() {
-            document.getElementById('codigoInput').value = '3290572';
+            document.getElementById('codigoInput').value = '';
             document.getElementById('codigoInput').focus();
         }
 
@@ -343,7 +344,7 @@
                     title: `${codigo}`,
                     text: `El Easy Find del código es: ${data[codigo]}`,
                     icon: 'success',
-                    timer: 25000,
+                    timer: 20000,
                     timerProgressBar: true,
                     toast: true,
                     position: 'top'
@@ -356,7 +357,7 @@
                     title: 'Error',
                     text: 'Código no encontrado',
                     icon: 'error',
-                    timer: 2500,
+                    timer: 1500,
                     timerProgressBar: true,
                     toast: true,
                     position: 'top'
