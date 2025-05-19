@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Easy Find</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body class="bg-light">
+
+    <!-- Navbar -->
+    <nav class="navbar bg-dark  navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Easy Find - ILUMINACION(v001)</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center mb-4">Easy Find - ILUMINACION(v001)</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="codigoInput" class="form-label">Ingresa el código:</label>
+                            <input type="number" id="codigoInput" class="form-control" value="" placeholder="Ej. 7915702" required>
+                        </div>
+                        <button type="submit" id="buscarBtn" class="btn btn-dark btn-primary w-100">Buscar</button>
+                    </div>
+                </div>
+                <div id="resultados" class="mt-4">
+                    <h5>Resultados:</h5>
+                    <ul class="list-group" id="listaResultados"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const data = {
+            7872432: '**EF:*1*** -7872432 - VENTILADOR  TORRE S/C OSCILANTE 32" 3VEL CZTF1BK CONFORT Z*****G1-F2',
+7890205: '**EF:*2*** -7890205 - ABANICO DE TORRE 40" 3VEL C/REMOTO NEGRO WESTINGHOUSE 79021*****G1-F2',
+7133440: '**EF:*8*** -7133440 - VENTILADOR INDUSTRIAL PISO 20 PULG VEGGA*****G1-F1',
+7119048: '**EF:*9*** -7119048 - VENTILADOR PARED INDUSTRIAL 20" PULGADAS- VEGGA*****G1-F1',
+7133261: '**EF:*15*** -7133261 - VENTILADOR DE PARED 16 #VP16C CORDON  VEGGA*****G2-F3',
+7133262: '**EF:*16*** -7133262 - VENTILADOR DE PARED 16 #VP-16C C/CONTROL-TIMER  VEGGA*****G2-F3',
+7519048: '**EF:*20*** -7519048 - VENTILADOR DE PIE 18" CON CONTROL FS-45*****G2-F2',
+7870595: '**EF:*21*** -7870595 - VENTILADOR PIE 18" 3 EN 1 LF-18- VEGGA*****G2-F2',
+7004266: '**EF:*25*** -7004266 - VENTILADOR P/TECHO ORBITAL 16 VEGGA*****G2-F1',
+7119089: '**EF:*26*** -7119089 - VENTILADOR TECHO ORBITAL INDUSTRIAL 18"- VEGGA*****G2-F1',
+7207129: '**EF:*30*** -7207129 - VENTILADOR ECONOMICO  DE PIE 16" FS-40- VEGGA*****G3-F3',
+7871470: '**EF:*31*** -7871470 - VENTILADOR WH DE PEDESTAL 16" 40W BLANCO 72913*****G3-F3',
+7871500: '**EF:*35*** -7871500 - VENTILADOR PARED 18" BLANCO VE-72759 WESTINGHOUSE*****G3-F2',
+7871468: '**EF:*36*** -7871468 - VENTILADOR WH D/PARED 16" C/C REMOTO 55W 72916/72704*****G3-F2',
+7852452: '**EF:*40*** -7852452 - VENTILADOR ORBITAL 16" BLANCO VE72782 WESTINGHOUSE*****G3-F1',
+7852453: '**EF:*41*** -7852453 - VENTILADOR PISO/PARED  INDUSTRIAL 20"  VE-72716 WESTINGHOUSE*****G3-F1',
+7080226: '**EF:*45*** -7080226 - ABANICO 5 ASPAS 52" C/CONTROL ARGOS LED SN 16W*****G4-F3',
+7019638: '**EF:*50*** -7019638 - REPUESTO ASPAS TIPO BAMBU OSCURAS P/ABANICO 519-721*****G4-F2',
+7019637: '**EF:*51*** -7019637 - REPUESTO ASPAS TIPO HOJA OSCURAS P/ABANICO 519-096*****G4-F2',
+7104584: '**EF:*52*** -7104584 - LAMPARA P/ABAN. REJA PROTECTOR ARQ-9321 12055*****G4-F2',
+7019632: '**EF:*53*** -7019632 - LAMPARA P/ABAN. BLANCA ARQ-9320*****G4-F2',
+7019636: '**EF:*54*** -7019636 - REPUESTO MOTOR P/ABANICO HAMPTON BAY CAFÉ 518-696*****G4-F2',
+7871911: '**EF:*60*** -7871911 - ABANICO 3 ASPAS 66” C/VIDRIO LED INT/ UL #19390 JAVA*****G4-F1',
+7871910: '**EF:*61*** -7871910 - ABANICO 5 ASPAS 54” C/VIDRIO LED INT/EXT UL #19385 NASSAU*****G4-F1',
+7871698: '**EF:*62*** -7871698 - ABANICO 5 ASPAS 42" MADEIRA NICKEL*****G4-F1',
+7871910: '**EF:*63*** -7871910 - ABANICO 5 ASPAS 54” C/VIDRIO LED INT/EXT UL #19385 NASSAU*****G4-F1',
+7019624: '**EF:*69*** -7019624 - ABANICO 5 ASPAS 42" DECORATIVO PALAU WH*****G5-F3',
+7019625: '**EF:*75*** -7019625 - ABANICO 5 ASPAS 42" DECORATIVO PALAU IRON*****G5-F2',
+7119044: '**EF:*80*** -7119044 - ABANICO 5 ASPAS 52" SIN VIDRIO MARBELLA II NI*****G5-F1',
+7872807: '**EF:*81*** -7872807 - ABANICO 3 ASPAS 60¨ C/LUZ DIMMER NICKEL INT MONTE CARLO*****G5-F1',
+7890268: '**EF:*85*** -7890268 - ABANICO CON CONTROL 6 ASPAS  C/VIDRIO MONACO BK-SN*****G6-F3',
+7872803: '**EF:*90*** -7872803 - ABANICO 6 ASPAS 30¨ C/VIDRIO BLANCO INT UL PETIT WH*****G6-F2',
+7872802: '**EF:*91*** -7872802 - ABANICO 6 ASPAS 30¨ C/VIDRIO NEGRO EB INT UL PETIT EB*****G6-F2',
+7041516: '**EF:*95*** -7041516 - VENTILADOR COMET HIERRO 5 ASP 52" 78009/78611  2L E27/E26 WH*****G6-F1',
+7890127: '**EF:*100*** -7890127 - ABANICO TECHO MONACO BK 6 ASPAS C/CONTROL*****G7-F3',
+7890269: '**EF:*105*** -7890269 - ABANICO CON CONTROL 6 ASPAS MONACO WD-SN*****G7-F2',
+7890128: '**EF:*106*** -7890128 - ABANICO TECHO MONACO CF 6 ASPAS C/CONTROL*****G7-F2',
+7872570: '**EF:*110*** -7872570 - VENTILADOR TECHO COMET 52"NEGRO WESTINGHOUSE*****G7-F1',
+7052405: '**EF:*111*** -7052405 - VENTILADOR INDUSTRIAL 56" INDUSTRIAL, BR. NICKEL HUNTER*****G7-F1',
+7011669: '**EF:*117*** -7011669 - VENTILADOR BRON RUST 6 ASPAS 30PLG 1L E27 60W 72386 WEST*****G8-F3',
+7872568: '**EF:*118*** -7872568 - VENTILADOR TECHO TURBO MAX 42" ESPRESSO WESTINGHOUSE*****G8-F3',
+7872569: '**EF:*119*** -7872569 - VENTILADOR INDUSTRAL REBEL III 56" NEGRO WESTINGHOUSE*****G8-F3',
+7872741: '**EF:*125*** -7872741 - VENTILADOR IND.CHOCOLATE 4 ASP.56" 1L E27 #VE-72800 WESTINGH*****G8-F2',
+7518990: '**EF:*133*** -7518990 - VENTILADOR INDUSTRIAL BLANCO 4 ASP. 56" CONTROL WESTINGHOUSE*****G8-F1',
+7871102: '**EF:*140*** -7871102 - VENTILADOR INDUSTRIAL REBEL III BLA. 3 ASP. 56" WESTINGHOUSE*****G9-F3',
+7890048: '**EF:*146*** -7890048 - VENTILADOR TECHO DC SMART NAOS HIERRO 5 ASP. 52" LED WH*****G9-F2',
+7034824: '**EF:*152*** -7034824 - VENTILADOR WESTI.EURO SWIRL RUSTIC BRONCE 52" 5ASP.#78583*****G9-F1',
+7873087: '**EF:*158*** -7873087 - VENTILADOR TECHO LED SMART DC DRACO NEGRO 60" 72959 WESTINGH*****G10-F3',
+7890049: '**EF:*165*** -7890049 - VENTILADOR TECHO DC VEGA 5 ASP. 46" LED WESTINGHOUSE*****G10-F2',
+7108818: '**EF:*170*** -7108818 - VENTILADOR BOREAS NEGRO 3ASP ABS 60" CONTROL WESTINGHOUSE*****G10-F1',
+7872844: '**EF:*175*** -7872844 - VENTILADOR C/LAMP. LED 36W DIMERIABLE 3CCT C/ CONTROL #PF012*****G11-F4',
+7872843: '**EF:*176*** -7872843 - VENTILADOR C/LAMP. LED 36W DIMERIABLE 3CCT C/ CONTROL #F-602*****G11-F4',
+7890270: '**EF:*185*** -7890270 - BOMBILLO VENTILADOR LED 30W*****G11-F3',
+7873033: '**EF:*186*** -7873033 - VENTILADOR DE MESA 3 VELOCIDADES 7" #DE-MF1446 NEGRO*****G11-F3',
+7871118: '**EF:*192*** -7871118 - REPUESTO FILTRO PURIFICADOR AIRE AIRTEK 360 H13 5 ETAPAS*****G11-F2',
+7870982: '**EF:*193*** -7870982 - PURIFICADOR DE AIRE TEK 360 AC 100V - 240V*****G11-F2',
+7870495: '**EF:*194*** -7870495 - VENTILADOR PED ENFRIA/AGUA-REPEL MOSCO-IONIZADOR PURIF AIRE*****G11-F2',
+7055192: '**EF:*200*** -7055192 - VENTILADOR BOREAS BLANCO 3 ASP. ABS 60" CONTROL WESTINGHOUSE*****G11-F1',
+7872743: '**EF:*201*** -7872743 - VENTILADOR ZETES BRONCE 5 ASP ABS.52" EXT.2L E27 #VE-72737 W*****G11-F1',
+7870922: '**EF:*208*** -7870922 - POSTE PEQ LED GRIS OSCURO - LI-1742-11W-41K*****G12-F4',
+7870912: '**EF:*209*** -7870912 - POSTE E27 GRIS OSCURO - LI-1433*****G12-F4',
+7017876: '**EF:*210*** -7017876 - MINIPOSTE NEGRO H-410/N TECNOLITE*****G12-F4',
+7871696: '**EF:*218*** -7871696 - LAMPARA BOLLARD NEGRO 3K/4K/65K ESTER 800 7WCCT FUMAGALLI*****G12-F3',
+7873110: '**EF:*219*** -7873110 - POSTE CON FAROL NEGRO GIAFFA E27 BK C/8.5W CCT*****G12-F3',
+7870920: '**EF:*220*** -7870920 - POSTE LED GRIS OSCURO - LI-1753-13W-41K*****G12-F3',
+7870908: '**EF:*221*** -7870908 - POSTE PEQ E27 GRIS OSCURO - LI-1431*****G12-F3',
+7008178: '**EF:*227*** -7008178 - FAROL JARDIN C/POSTE BRONCE FA603-DG 80CM I-56 U*****G12-F2',
+7209660: '**EF:*228*** -7209660 - FAROL DE JARDIN  NEGRO C/POSTE FA603-BK*****G12-F2',
+7871571: '**EF:*235*** -7871571 - FAROL POSTE 5605 COFFEE FA5605 PT-CF*****G12-F1',
+7872495: '**EF:*236*** -7872495 - FAROL POSTE 7525 ORB ETL IP44 FA7525PT-ORB*****G12-F1',
+7872497: '**EF:*237*** -7872497 - POSTE C/1FAROL 7525 ORB 31.10¨ ETL IP44 PO7525-01ORB*****G12-F1'
+
+
+        };
+
+        function resetForm() {
+            document.getElementById('codigoInput').value = '';
+            document.getElementById('codigoInput').focus();
+        }
+
+        function agregarResultado(mensaje, esExito) {
+            const lista = document.getElementById('listaResultados');
+            const item = document.createElement('li');
+            item.className = 'list-group-item ' + (esExito ? 'list-group-item-success' : 'list-group-item-danger');
+            item.textContent = mensaje;
+            lista.appendChild(item);
+        }
+
+        function buscarCodigo() {
+            const codigo = document.getElementById('codigoInput').value;
+
+            if (codigo in data) {
+                Swal.fire({
+                    title: `${codigo}`,
+                    text: `El Easy Find del código es: ${data[codigo]}`,
+                    icon: 'success',
+                    timer: 20000,
+                    timerProgressBar: true,
+                    toast: true,
+                    position: 'top'
+
+
+                });
+                agregarResultado(`${codigo} - ${data[codigo]}`, true);
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Código no encontrado',
+                    icon: 'error',
+                    timer: 1500,
+                    timerProgressBar: true,
+                    toast: true,
+                    position: 'top'
+                });
+                agregarResultado(`${codigo} - Código no encontrado`, false);
+            }
+
+            resetForm();
+        }
+
+        document.getElementById('buscarBtn').addEventListener('click', buscarCodigo);
+        document.getElementById('codigoInput').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                buscarCodigo();
+            }
+        });
+    </script>
+
+
+</body>
+
+</html>
